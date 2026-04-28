@@ -155,7 +155,7 @@ h1{font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:900;line-he
     </select>
   </div>
   <div class="tbl-wrap">
-    <div class="tbl-hd"><div>#</div><div>Student</div><div>Ex 1</div><div>Ex 2</div><div>Submitted</div><div></div></div>
+    <div class="tbl-hd" style="grid-template-columns:2.5rem 1fr 60px 90px 90px 120px 70px"><div>#</div><div>Student</div><div>Unit</div><div>Ex 1</div><div>Ex 2</div><div>Submitted</div><div></div></div>
     <div id="tbl-body"><div class="loading">Loading…</div></div>
   </div>
 </div>
@@ -231,7 +231,7 @@ function rowH(r,n){
   const s=r.scores||{};const dt=new Date(r.submitted_at);
   const ds=dt.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
   const ts=dt.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
-  return`<div class="tbl-row" id="row-${r.id}"><div class="row-m" onclick="tog('${r.id}')"><div class="rn">${n}</div><div class="rname">${esc(r.student_name)}</div><div class="rsc ${sc(s.ex1_correct,s.ex1_total)}">${s.ex1_total?`${s.ex1_correct}/${s.ex1_total}`:'—'}</div><div class="rsc ${sc(s.ex2_correct,s.ex2_total)}">${s.ex2_total?`${s.ex2_correct}/${s.ex2_total}`:'—'}</div><div class="rdate">${ds}<br>${ts}</div><div class="rtog" id="tg-${r.id}">▶ View</div></div><div class="det" id="det-${r.id}">${detH(r)}</div></div>`;
+  return`<div class="tbl-row" id="row-${r.id}"><div class="row-m" style="grid-template-columns:2.5rem 1fr 60px 90px 90px 120px 70px" onclick="tog('${r.id}')"><div class="rn">${n}</div><div class="rname">${esc(r.student_name)}</div><div class="rn" style="color:var(--teal-d);font-weight:600">${r.unit_number||'—'}</div><div class="rsc ${sc(s.ex1_correct,s.ex1_total)}">${s.ex1_total?`${s.ex1_correct}/${s.ex1_total}`:'—'}</div><div class="rsc ${sc(s.ex2_correct,s.ex2_total)}">${s.ex2_total?`${s.ex2_correct}/${s.ex2_total}`:'—'}</div><div class="rdate">${ds}<br>${ts}</div><div class="rtog" id="tg-${r.id}">▶ View</div></div><div class="det" id="det-${r.id}">${detH(r)}</div></div>`;
 }
 
 function detH(r){

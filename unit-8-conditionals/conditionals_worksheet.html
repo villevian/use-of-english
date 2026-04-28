@@ -730,7 +730,7 @@ async function submitAnswers() {
     const res = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE}`, {
       method: 'POST',
       headers: { 'apikey': SUPABASE_ANON, 'Authorization': `Bearer ${SUPABASE_ANON}`, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
-      body: JSON.stringify({ student_name: name, answers: collectAnswers(), scores: calcScores() })
+      body: JSON.stringify({ student_name: name, unit_number: 8, answers: collectAnswers(), scores: calcScores() })
     });
     if (res.ok || res.status === 201) {
       st.className = 'sub-st ok';
