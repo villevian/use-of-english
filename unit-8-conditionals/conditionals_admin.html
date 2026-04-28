@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Conditionals</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --teal:#7DBFB9;--teal-d:#2D7A72;--teal-l:#E8F7F6;
+  --white:#FFF;--ink:#1A3A38;--mid:#3D6360;--light:#7A9E9C;
+  --accent:#C0392B;--green:#1A6B45;--gsft:#EDFAF4;
+  --border:rgba(125,191,185,0.25);
+  --glass:rgba(255,255,255,0.78);--glass2:rgba(255,255,255,0.6);
+  --shadow:0 8px 32px rgba(45,122,114,0.12);
+  --t1c:#1D4ED8;--t1b:rgba(239,246,255,0.9);
+  --t2c:#6D28D9;--t2b:rgba(245,243,255,0.9);
+  --t3c:#92400E;--t3b:rgba(254,249,238,0.9);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Source Serif 4',serif;color:var(--ink);line-height:1.7;
+  padding:2rem 1rem 4rem;min-height:100vh;
+  background-color:#F0FAF9;
+  background-image:linear-gradient(170deg,#7DBFB9 0%,#7DBFB9 100%),linear-gradient(170deg,#E8F5F4 0%,#E8F5F4 100%),linear-gradient(135deg,#FAFEFE 0%,#F0FAF9 100%);
+  background-size:38% 120%,40% 120%,100% 100%;
+  background-position:-5% -10%,105% -10%,0 0;
+  background-repeat:no-repeat;
+}
+.page{max-width:1100px;margin:0 auto}
+
+/* LOGIN */
+#login{display:flex;align-items:center;justify-content:center;min-height:80vh}
+.login-box{background:var(--glass);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.65);border-radius:24px;padding:2.75rem 2.25rem;max-width:420px;width:100%;text-align:center;box-shadow:var(--shadow)}
+.tag-l{font-family:'JetBrains Mono',monospace;font-size:.65rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;background:linear-gradient(135deg,var(--teal-d),var(--teal));color:#fff;padding:.3rem .9rem;border-radius:50px;display:inline-block;margin-bottom:1.25rem}
+.login-box h1{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:900;margin-bottom:.3rem}
+.login-box h1 span{color:var(--accent);font-style:italic}
+.login-box .sub{font-style:italic;color:var(--mid);font-size:.9rem;margin-bottom:2rem}
+.login-box label{display:block;text-align:left;font-family:'JetBrains Mono',monospace;font-size:.62rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--light);margin-bottom:.35rem}
+.login-box input[type=password]{width:100%;border:2px solid rgba(125,191,185,0.35);background:rgba(255,255,255,0.7);font-family:'JetBrains Mono',monospace;font-size:.95rem;padding:.55rem 1rem;outline:none;border-radius:12px;margin-bottom:1.1rem;color:var(--ink);transition:all .2s}
+.login-box input:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(125,191,185,0.2)}
+.lerr{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--accent);margin-bottom:.85rem;display:none;background:#FEF2F2;padding:.4rem .75rem;border-radius:8px;border:1px solid rgba(192,57,43,0.2)}
+.lerr.show{display:block}
+
+/* DASHBOARD */
+#dashboard{display:none}
+.hdr-glass{background:var(--glass);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.6);border-radius:20px;padding:2rem;box-shadow:var(--shadow);margin-bottom:1.75rem}
+.row{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:.75rem}
+h1{font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:900;line-height:1.05}
+.red{color:var(--accent)}
+
+.btn{font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:.5rem 1.2rem;border-radius:50px;border:2px solid var(--teal);background:transparent;color:var(--teal-d);cursor:pointer;transition:all .2s}
+.btn:hover{background:var(--teal);color:#fff;box-shadow:0 4px 16px rgba(125,191,185,0.3)}
+.btn-t{background:linear-gradient(135deg,var(--teal-d),var(--teal));border-color:transparent;color:#fff;box-shadow:0 4px 16px rgba(45,122,114,0.22)}
+.btn-t:hover{opacity:.9;transform:translateY(-1px)}
+.btn-g{border-color:rgba(125,191,185,0.3);color:var(--light)}
+.btn-g:hover{border-color:var(--accent);color:var(--accent);background:rgba(192,57,43,0.05)}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:.85rem;margin-bottom:1.75rem}
+@media(max-width:640px){.stats{grid-template-columns:1fr 1fr}}
+.stat{background:var(--glass);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.55);border-radius:16px;padding:1.1rem;text-align:center;box-shadow:var(--shadow)}
+.stat .num{font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;color:var(--teal-d)}
+.stat .lbl{font-family:'JetBrains Mono',monospace;font-size:.62rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--light);margin-top:.2rem}
+
+.filters{display:flex;gap:.6rem;margin-bottom:1.1rem;flex-wrap:wrap;align-items:center;background:var(--glass2);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.5);border-radius:14px;padding:.75rem 1rem;box-shadow:var(--shadow)}
+.fi{font-family:'JetBrains Mono',monospace;font-size:.73rem;padding:.38rem .65rem;border:1.5px solid rgba(125,191,185,0.3);background:rgba(255,255,255,0.7);color:var(--mid);outline:none;border-radius:8px;transition:all .2s}
+.fi:focus{border-color:var(--teal);background:rgba(255,255,255,0.9)}
+.fi-lbl{font-family:'JetBrains Mono',monospace;font-size:.63rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--light)}
+
+.tbl-wrap{background:var(--glass);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,0.55);border-radius:18px;overflow:hidden;box-shadow:var(--shadow)}
+.tbl-hd{display:grid;grid-template-columns:2.5rem 1fr 90px 90px 130px 80px;background:linear-gradient(135deg,var(--teal-d),var(--teal));color:#fff;padding:.7rem 1.25rem;font-family:'JetBrains Mono',monospace;font-size:.65rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+@media(max-width:700px){.tbl-hd{display:none}}
+.tbl-row{border-bottom:1px solid rgba(125,191,185,0.15);cursor:pointer;transition:background .12s}
+.tbl-row:last-child{border-bottom:none}
+.tbl-row:hover{background:rgba(125,191,185,0.07)}
+.tbl-row.exp{background:rgba(125,191,185,0.06)}
+.row-m{display:grid;grid-template-columns:2.5rem 1fr 90px 90px 130px 80px;padding:.8rem 1.25rem;align-items:center}
+.rn{font-family:'JetBrains Mono',monospace;font-size:.73rem;color:var(--light)}
+.rname{font-weight:600;font-size:.95rem;color:var(--ink)}
+.rsc{font-family:'JetBrains Mono',monospace;font-size:.76rem;color:var(--mid)}
+.rsc.hi{color:var(--green);font-weight:600}.rsc.lo{color:var(--accent);font-weight:600}
+.rdate{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--light)}
+.rtog{font-family:'JetBrains Mono',monospace;font-size:.65rem;font-weight:600;letter-spacing:.04em;color:var(--teal-d);text-align:right}
+
+.det{display:none;padding:1.25rem;border-top:1px dashed rgba(125,191,185,0.25);background:rgba(232,247,246,0.4)}
+.det.show{display:block}
+.det-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+@media(max-width:600px){.det-grid{grid-template-columns:1fr}}
+.dsec{background:rgba(255,255,255,0.8);border:1px solid rgba(125,191,185,0.2);padding:.85rem;border-radius:12px}
+.dsh{font-family:'JetBrains Mono',monospace;font-size:.62rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--light);margin-bottom:.6rem;padding-bottom:.35rem;border-bottom:1px solid rgba(125,191,185,0.2)}
+.ar{display:grid;grid-template-columns:1.4rem 1fr 1fr;gap:.3rem .75rem;padding:.3rem 0;border-bottom:1px dashed rgba(125,191,185,0.2);font-size:.83rem;align-items:start}
+.ar:last-child{border-bottom:none}
+.an{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--light)}
+.as{color:var(--ink)}.as.ok{color:var(--green);font-weight:600}.as.err{color:var(--accent)}
+.ac{font-style:italic;color:var(--light);font-size:.78rem}
+.tb{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.63rem;font-weight:600;padding:.1rem .35rem;border-radius:50px;margin-left:.3rem}
+.t1{background:var(--t1b);color:var(--t1c)}.t2{background:var(--t2b);color:var(--t2c)}.t3{background:var(--t3b);color:var(--t3c)}
+.dfull{background:rgba(255,255,255,0.8);border:1px solid rgba(125,191,185,0.2);padding:.85rem;border-radius:12px}
+.doi{padding:.5rem 0;border-bottom:1px dashed rgba(125,191,185,0.2);font-size:.87rem}
+.doi:last-child{border-bottom:none}
+.doq{font-style:italic;color:var(--mid);font-size:.78rem;margin-bottom:.2rem}
+.oa{color:var(--ink);white-space:pre-wrap;word-break:break-word}
+.oa:empty::before{content:'(no answer)';color:var(--light);font-style:italic}
+.loading{text-align:center;padding:3rem;font-family:'JetBrains Mono',monospace;font-size:.82rem;color:var(--light)}
+.empty{text-align:center;padding:3rem;font-style:italic;color:var(--light)}
+</style>
+</head>
+<body>
+<div class="page">
+<div id="login">
+  <div class="login-box">
+    <div class="tag-l">Teacher Access</div>
+    <h1>Admin<br><span>Panel</span></h1>
+    <p class="sub">Conditionals Worksheet — Student Submissions</p>
+    <label for="pw">Password</label>
+    <input type="password" id="pw" placeholder="Enter admin password" onkeydown="if(event.key==='Enter')tryLogin()">
+    <div class="lerr" id="lerr">Incorrect password. Try again.</div>
+    <button class="btn btn-t" style="width:100%;padding:.65rem" onclick="tryLogin()">Enter →</button>
+  </div>
+</div>
+
+<div id="dashboard">
+  <div class="hdr-glass">
+    <div class="row">
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.63rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;background:linear-gradient(135deg,var(--teal-d),var(--teal));color:#fff;display:inline-block;padding:.28rem .85rem;border-radius:50px;margin-bottom:.75rem">Teacher Admin</div>
+        <h1>Submissions <span class="red">Dashboard</span></h1>
+      </div>
+      <div style="display:flex;gap:.6rem;align-items:flex-end;flex-wrap:wrap">
+        <button class="btn btn-t" onclick="loadData()">↻ Refresh</button>
+        <button class="btn" onclick="exportCSV()">Export CSV</button>
+        <button class="btn btn-g" onclick="logout()">Log out</button>
+      </div>
+    </div>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="num" id="s-tot">—</div><div class="lbl">Submissions</div></div>
+    <div class="stat"><div class="num" id="s-stu">—</div><div class="lbl">Students</div></div>
+    <div class="stat"><div class="num" id="s-e1">—</div><div class="lbl">Avg Ex 1</div></div>
+    <div class="stat"><div class="num" id="s-e2">—</div><div class="lbl">Avg Ex 2</div></div>
+  </div>
+  <div class="filters">
+    <span class="fi-lbl">Filter:</span>
+    <input class="fi" id="fi-name" placeholder="Search by name…" oninput="renderTable()">
+    <select class="fi" id="fi-date" onchange="renderTable()">
+      <option value="">All dates</option>
+      <option value="today">Today</option>
+      <option value="week">This week</option>
+    </select>
+    <select class="fi" id="fi-sort" onchange="renderTable()">
+      <option value="date-desc">Newest first</option>
+      <option value="date-asc">Oldest first</option>
+      <option value="name-asc">Name A→Z</option>
+      <option value="score-desc">Best score first</option>
+    </select>
+  </div>
+  <div class="tbl-wrap">
+    <div class="tbl-hd"><div>#</div><div>Student</div><div>Ex 1</div><div>Ex 2</div><div>Submitted</div><div></div></div>
+    <div id="tbl-body"><div class="loading">Loading…</div></div>
+  </div>
+</div>
+</div>
+
+<script>
+const SUPABASE_URL='https://ihfmroksigkimufjxope.supabase.co';
+const SUPABASE_ANON='sb_publishable_TD7WKtwpAk6ZxaY1uSHXgA_gJ9UkFXt';
+// ⚠ sb_secret_ key must NEVER go in client-side HTML
+const TABLE='conditionals_submissions';
+const PASS='teacher2025'; // change this!
+
+const ex1A=[
+  {ans:["don't turn off","do not turn off"],type:"1"},{ans:["read"],type:"1"},
+  {ans:["hadn't invented","had not invented"],type:"3"},{ans:["were","was"],type:"2"},
+  {ans:["had known"],type:"3"},{ans:["stopped"],type:"2"},{ans:["learns"],type:"1"},
+  {ans:["had listened"],type:"3"},{ans:["didn't have","did not have"],type:"2"},
+  {ans:["consists"],type:"1"},{ans:["had seen"],type:"3"},{ans:["offered"],type:"2"},
+  {ans:["isn't","is not"],type:"1"},{ans:["taught"],type:"2"},
+];
+const ex2A={b1:["wrote"],b2:["would take"],b3:["train","are trained"],b4:["will gradually lose","gradually lose"],b5:["hadn't had","had not had"],b6:["would never have become"],b7:["would have written"],b8:["hadn't discovered","had not discovered"],b9:["opens"],b10:["will she know"],b11:["offers"],b12:["breaks"]};
+let allData=[];
+
+function tryLogin(){
+  if(document.getElementById('pw').value===PASS){
+    document.getElementById('login').style.display='none';
+    document.getElementById('dashboard').style.display='block';
+    loadData();
+  }else{document.getElementById('lerr').className='lerr show';document.getElementById('pw').value='';document.getElementById('pw').focus();}
+}
+function logout(){document.getElementById('login').style.display='flex';document.getElementById('dashboard').style.display='none';document.getElementById('pw').value='';document.getElementById('lerr').className='lerr';}
+
+async function loadData(){
+  document.getElementById('tbl-body').innerHTML='<div class="loading">⏳ Loading submissions…</div>';
+  try{
+    const res=await fetch(`${SUPABASE_URL}/rest/v1/${TABLE}?select=*&order=submitted_at.desc`,{headers:{'apikey':SUPABASE_ANON,'Authorization':`Bearer ${SUPABASE_ANON}`}});
+    if(!res.ok)throw new Error(`HTTP ${res.status}: ${await res.text()}`);
+    allData=await res.json();updateStats();renderTable();
+  }catch(e){document.getElementById('tbl-body').innerHTML=`<div class="loading" style="color:var(--accent)">❌ ${e.message}<br><br>Check Supabase table + RLS policies.</div>`;}
+}
+
+function updateStats(){
+  const names=new Set(allData.map(r=>r.student_name.toLowerCase().trim()));
+  document.getElementById('s-tot').textContent=allData.length;
+  document.getElementById('s-stu').textContent=names.size;
+  const e1=[],e2=[];
+  allData.forEach(r=>{const s=r.scores||{};if(s.ex1_total>0)e1.push(s.ex1_correct/s.ex1_total*100);if(s.ex2_total>0)e2.push(s.ex2_correct/s.ex2_total*100);});
+  document.getElementById('s-e1').textContent=e1.length?Math.round(e1.reduce((a,b)=>a+b)/e1.length)+'%':'—';
+  document.getElementById('s-e2').textContent=e2.length?Math.round(e2.reduce((a,b)=>a+b)/e2.length)+'%':'—';
+}
+
+function pct(r){const s=r.scores||{};const t=(s.ex1_total||0)+(s.ex2_total||0);return t>0?((s.ex1_correct||0)+(s.ex2_correct||0))/t:0;}
+function sc(c,t){if(!t)return'';return c/t>=0.8?'hi':c/t<0.5?'lo':'';}
+
+function renderTable(){
+  let d=[...allData];
+  const nf=document.getElementById('fi-name').value.toLowerCase().trim();
+  const df=document.getElementById('fi-date').value;
+  const sf=document.getElementById('fi-sort').value;
+  if(nf)d=d.filter(r=>r.student_name.toLowerCase().includes(nf));
+  if(df==='today'){const t=new Date().toDateString();d=d.filter(r=>new Date(r.submitted_at).toDateString()===t);}
+  else if(df==='week'){const w=Date.now()-7*24*60*60*1000;d=d.filter(r=>new Date(r.submitted_at).getTime()>w);}
+  if(sf==='date-asc')d.sort((a,b)=>new Date(a.submitted_at)-new Date(b.submitted_at));
+  else if(sf==='name-asc')d.sort((a,b)=>a.student_name.localeCompare(b.student_name));
+  else if(sf==='score-desc')d.sort((a,b)=>pct(b)-pct(a));
+  else d.sort((a,b)=>new Date(b.submitted_at)-new Date(a.submitted_at));
+  const body=document.getElementById('tbl-body');
+  if(!d.length){body.innerHTML='<div class="empty">No submissions match your filters.</div>';return;}
+  body.innerHTML=d.map((r,i)=>rowH(r,i+1)).join('');
+}
+
+function rowH(r,n){
+  const s=r.scores||{};const dt=new Date(r.submitted_at);
+  const ds=dt.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+  const ts=dt.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+  return`<div class="tbl-row" id="row-${r.id}"><div class="row-m" onclick="tog('${r.id}')"><div class="rn">${n}</div><div class="rname">${esc(r.student_name)}</div><div class="rsc ${sc(s.ex1_correct,s.ex1_total)}">${s.ex1_total?`${s.ex1_correct}/${s.ex1_total}`:'—'}</div><div class="rsc ${sc(s.ex2_correct,s.ex2_total)}">${s.ex2_total?`${s.ex2_correct}/${s.ex2_total}`:'—'}</div><div class="rdate">${ds}<br>${ts}</div><div class="rtog" id="tg-${r.id}">▶ View</div></div><div class="det" id="det-${r.id}">${detH(r)}</div></div>`;
+}
+
+function detH(r){
+  const a=r.answers||{},v=a.ex1_verbs||{},t=a.ex1_types||{};
+  let e1='';
+  ex1A.forEach((x,i)=>{const n=i+1,vOk=mA(v[n]||'',x.ans),tOk=(t[n]||'')===x.type&&t[n],vc=vOk===true?'ok':vOk===false?'err':'',tb=t[n]?`<span class="tb t${t[n]}">T${t[n]}</span>`:'';e1+=`<div class="ar"><div class="an">${n}.</div><div class="as ${vc}">${esc(v[n])||'<em style="color:var(--light)">—</em>'} ${tb}</div><div class="ac">${x.ans[0]} <span class="tb t${x.type}">T${x.type}</span></div></div>`;});
+  const e2a=a.ex2||{};let e2='';Object.entries(ex2A).forEach(([id,c],i)=>{const val=e2a[id]||'',ok=mA(val,c);e2+=`<div class="ar"><div class="an">${i+1}.</div><div class="as ${ok===true?'ok':ok===false?'err':''}">${esc(val)||'<em style="color:var(--light)">—</em>'}</div><div class="ac">${c[0]}</div></div>`;});
+  const e3=a.ex3||[],e3q=["If…","Unless…","If…","Unless…","If…","Supposing…","In case…","But for…"];
+  const e3r=e3.map((v,i)=>`<div class="doi"><div class="doq">${e3q[i]||''}</div><div class="oa">${esc(v)}</div></div>`).join('')||'<div class="empty" style="padding:.4rem">No answers</div>';
+  const e4=a.ex4||[];const e4r=e4.map((v,i)=>`<div class="doi"><div class="doq">Sentence ${i+1}</div><div class="oa">${esc(v)}</div></div>`).join('')||'<div class="empty" style="padding:.4rem">No answers</div>';
+  return`<div class="det-grid"><div class="dsec"><div class="dsh">Exercise 1 <span style="float:right;font-style:italic">answer | correct</span></div>${e1}</div><div class="dsec"><div class="dsh">Exercise 2 <span style="float:right;font-style:italic">answer | correct</span></div>${e2}</div></div><div class="dfull" style="margin-bottom:.75rem"><div class="dsh" style="margin-bottom:.5rem">Exercise 3 — Rewrites</div>${e3r}</div><div class="dfull"><div class="dsh" style="margin-bottom:.5rem">Exercise 4 — Multi-connector</div>${e4r}</div>`;
+}
+
+function tog(id){const det=document.getElementById(`det-${id}`),row=document.getElementById(`row-${id}`),tg=document.getElementById(`tg-${id}`);const open=det.classList.toggle('show');row.classList.toggle('exp',open);tg.textContent=open?'▼ Hide':'▶ View';}
+function norm(s){return s.toLowerCase().trim().replace(/['']/g,"'").replace(/\s+/g,' ').replace(/ise\b/g,'ize').replace(/our\b/g,'or').replace(/\bwould not\b/g,"wouldn't").replace(/\bwill not\b/g,"won't").replace(/\bdid not\b/g,"didn't").replace(/\bdoes not\b/g,"doesn't").replace(/\bhad not\b/g,"hadn't").replace(/\bhave not\b/g,"haven't");}
+function mA(val,arr){const u=norm(val);if(!u)return null;return arr.some(a=>norm(a)===u||norm(a).replace(/'/g,'')===u.replace(/'/g,''));}
+function esc(s){if(!s)return'';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function exportCSV(){
+  if(!allData.length){alert('No data.');return;}
+  const rows=[['ID','Student','Submitted','Ex1 Correct','Ex1 Total','Ex2 Correct','Ex2 Total']];
+  allData.forEach(r=>{const s=r.scores||{};rows.push([r.id,r.student_name,r.submitted_at,s.ex1_correct||0,s.ex1_total||0,s.ex2_correct||0,s.ex2_total||0]);});
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([rows.map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n')],{type:'text/csv'}));a.download='submissions.csv';a.click();
+}
+</script>
+</body>
+</html>
