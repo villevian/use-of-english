@@ -559,7 +559,7 @@ function renderEx1() {
       <div class="sn">${n}.</div>
       <div>
         <span>${esc(d.before)}
-          <input class="blank" id="v${n}" data-ans='${JSON.stringify(d.ans)}' placeholder="___________" autocomplete="off">
+          <input class="blank" id="v${n}" data-ans='${JSON.stringify(d.ans).replace(/\x27/g,"&#39;")}' placeholder="___________" autocomplete="off">
           <span class="cue">(${esc(d.cue)})</span>
           ${esc(d.after)} ${eH}
         </span>
@@ -583,7 +583,7 @@ function renderEx2() {
     else if (p.t === 'x') html += esc(p.v);
     else {
       n++;
-      const ansStr = JSON.stringify(p.ans);
+      const ansStr = JSON.stringify(p.ans).replace(/\x27/g,"&#39;");
       html += `<sup class="bn">${n}</sup><input class="bi" id="${p.id}" data-ans='${ansStr}' placeholder="___________" autocomplete="off" size="13"> <span class="cue">(${esc(p.cue)})</span>`;
     }
   });
