@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<!-- v1777497937 -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Conditionals — The Real World Edition</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -455,7 +456,7 @@ footer strong{font-style:normal;color:var(--mid)}
 <div class="card" id="ex1">
   <div class="ex-hd"><div class="ex-n">1</div><div class="ex-inst">Put the verbs in brackets into the correct form, then identify the type of conditional. Hover 🐣 for extra context.</div></div>
   <div class="ex-body">
-    <div id="ex1"></div>
+    <div id="ex1-list"></div>
     <div class="brow">
       <button class="btn btn-teal" onclick="checkEx1()">Check answers</button>
       <button class="btn" onclick="revealEx1()">Reveal all</button>
@@ -469,7 +470,7 @@ footer strong{font-style:normal;color:var(--mid)}
 <div class="card" id="ex2">
   <div class="ex-hd"><div class="ex-n">2</div><div class="ex-inst">Complete the text. Put the verbs in brackets into the correct tense.</div></div>
   <div class="ex-body">
-    <div class="story" id="ex2"></div>
+    <div class="story" id="ex2-list"></div>
     <div class="brow">
       <button class="btn btn-teal" onclick="checkEx2()">Check answers</button>
       <button class="btn" onclick="revealEx2()">Reveal all</button>
@@ -483,7 +484,7 @@ footer strong{font-style:normal;color:var(--mid)}
 <div class="card" id="ex3">
   <div class="ex-hd"><div class="ex-n">3</div><div class="ex-inst">Rewrite each sentence as a conditional using the connector given. Keep the meaning.</div></div>
   <div class="ex-body">
-    <div id="ex3"></div>
+    <div id="ex3-list"></div>
     <div class="brow">
       <button class="btn btn-teal" onclick="revealEx3()">Show model answers</button>
       <button class="btn" onclick="resetEx3()">Reset</button>
@@ -495,7 +496,7 @@ footer strong{font-style:normal;color:var(--mid)}
 <div class="card" id="ex4">
   <div class="ex-hd"><div class="ex-n">4</div><div class="ex-inst">Rewrite each sentence using: <em>if · unless · only if · as long as · provided that · otherwise · supposing · but for · even if</em></div></div>
   <div class="ex-body">
-    <div id="ex4"></div>
+    <div id="ex4-list"></div>
     <div class="brow">
       <button class="btn btn-teal" onclick="revealEx4()">Show model answers</button>
       <button class="btn" onclick="resetEx4()">Reset</button>
@@ -548,7 +549,7 @@ function esc(s) { return !s ? '' : String(s).replace(/&/g,'&amp;').replace(/</g,
 
 // ── RENDER EX1 ───────────────────────────────────────────────────────────────
 function renderEx1() {
-  const c = document.getElementById('ex1');
+  const c = document.getElementById('ex1-list');
   c.innerHTML = ex1Data.map((d, i) => {
     const n = i + 1;
     const eH = d.egg
@@ -588,12 +589,12 @@ function renderEx2() {
     }
   });
   if (inP) html += '</p>';
-  document.getElementById('ex2').innerHTML = html;
+  document.getElementById('ex2-list').innerHTML = html;
 }
 
 // ── RENDER EX3 ───────────────────────────────────────────────────────────────
 function renderEx3() {
-  document.getElementById('ex3').innerHTML = ex3Data.map(d => `
+  document.getElementById('ex3-list').innerHTML = ex3Data.map(d => `
     <div class="ri">
       <div class="orig"><strong>${d.n}.</strong> ${esc(d.orig)}</div>
       <div>
@@ -606,7 +607,7 @@ function renderEx3() {
 
 // ── RENDER EX4 ───────────────────────────────────────────────────────────────
 function renderEx4() {
-  document.getElementById('ex4').innerHTML = ex4Data.map(d => `
+  document.getElementById('ex4-list').innerHTML = ex4Data.map(d => `
     <div class="ri">
       <div class="orig"><strong>${d.n}.</strong> <em>${esc(d.orig)}</em></div>
       <p style="font-size:.77rem;color:var(--light);margin:.15rem 0 0">Write as many versions as you can.</p>
@@ -661,7 +662,7 @@ function resetEx1() {
 // ── CHECK EX2 ────────────────────────────────────────────────────────────────
 function checkEx2() {
   let ok = 0, tot = 0;
-  document.querySelectorAll('#ex2 .bi').forEach(inp => {
+  document.querySelectorAll('#ex2-list .bi').forEach(inp => {
     const ans = JSON.parse(inp.dataset.ans);
     const r = matchAns(inp.value, ans);
     tot++;
@@ -672,12 +673,12 @@ function checkEx2() {
   document.getElementById('sc2').className = 'sc show';
 }
 function revealEx2() {
-  document.querySelectorAll('#ex2 .bi').forEach(inp => {
+  document.querySelectorAll('#ex2-list .bi').forEach(inp => {
     inp.value = JSON.parse(inp.dataset.ans)[0]; inp.className = 'bi ok';
   });
 }
 function resetEx2() {
-  document.querySelectorAll('#ex2 .bi').forEach(inp => { inp.value = ''; inp.className = 'bi'; });
+  document.querySelectorAll('#ex2-list .bi').forEach(inp => { inp.value = ''; inp.className = 'bi'; });
   document.getElementById('sc2').className = 'sc';
 }
 
@@ -700,7 +701,7 @@ function collectAnswers() {
   const vv = {}, tt = {};
   ex1Data.forEach((d, i) => { const n = i+1; vv[n] = document.getElementById(`v${n}`).value; tt[n] = document.getElementById(`t${n}`).value; });
   const e2 = {};
-  document.querySelectorAll('#ex2 .bi').forEach(inp => { e2[inp.id] = inp.value; });
+  document.querySelectorAll('#ex2-list .bi').forEach(inp => { e2[inp.id] = inp.value; });
   return {
     ex1_verbs: vv, ex1_types: tt, ex2: e2,
     ex3: ex3Data.map(d => document.getElementById(`r${d.n}`).value),
@@ -715,7 +716,7 @@ function calcScores() {
     const ts = document.getElementById(`t${n}`);
     if (ts.value === d.type && ts.value) e1ok++;
   });
-  document.querySelectorAll('#ex2 .bi').forEach(inp => {
+  document.querySelectorAll('#ex2-list .bi').forEach(inp => {
     e2tot++;
     if (matchAns(inp.value, JSON.parse(inp.dataset.ans)) === true) e2ok++;
   });
